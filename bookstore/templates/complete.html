@@ -1,0 +1,42 @@
+{% extends "frontstage.html" %}
+{% block head %}
+{{ super() }}
+{% endblock head %}
+
+{% block title %} 下單完成 {% endblock title%}
+
+{% block content %}
+
+{% with messages = get_flashed_messages() %}
+{% if messages[0] == 'No permission' %}
+  
+<script language="javascript">
+  alert('您沒有使用者的權限喔！');
+</script>
+
+{% endif %}
+{% endwith %}
+
+<br/>
+
+<div class="container-xxl">
+  <center>
+    <img width="30%" height="30%" src="../static/img/order_success.png">
+  </center>
+  <center>
+    <h4>下單完成！</h4>
+  </center>
+  <center>
+    
+      <a href="{{ url_for('bookstore.bookstore') }}">
+        <button class="btn btn-outline-success" style="width:30%;">
+          回書店
+        </button>
+      </a>
+      
+  </center>
+  
+  
+</div>
+
+{% endblock content%}

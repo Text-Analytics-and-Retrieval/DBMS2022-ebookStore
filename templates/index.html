@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block head %}
+{{ super() }}
+{% endblock head %}
+
+{% block title %}中山網路書店{% endblock title%}
+
+{% block content%}
+
+<img class="index_pic" src="{{ url_for('static', filename='./img/home.png') }}">
+<h1 class="index_title">中山網路書店</h1>
+<div class="btn_div">
+    <a href="{{ url_for('api.register') }}">
+        <button class="index_btn">註冊</button>
+    </a>
+    <a href="{{ url_for('api.login') }}">
+        <button class="index_btn">登入</button>
+    </a>
+</div>
+{% endblock content%}

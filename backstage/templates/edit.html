@@ -1,0 +1,74 @@
+{% extends "backstage.html" %}
+{% block head %}
+{{ super() }}
+
+{% endblock head %}
+
+{% block title %}BookStore{% endblock title%}
+
+{% block content%}
+
+
+<br/>
+<div class="container-xl">
+  <br/>
+  <form method="post" enctype=multipart/form-data action={{ url_for('manager.edit') }}>
+    <table class="table table-bordered">
+      <tr>
+        <th>商品編號</th>
+        <td><input class="form-control" type="text" value="{{ data.商品編號 }}" name="pid" readonly class="id_input"></td>
+      </tr>
+      <tr>
+        <th>商品名稱</th>
+        <td><input class="form-control" type="text" value="{{ data.商品名稱 }}" name="name" required></td>
+      </tr>
+      <tr>
+        <th>單價</th>
+        <td><input class="form-control" type="text" value="{{ data.單價 }}" name="price" required></td>
+      </tr>
+      <tr>
+        <th>類別</th>
+        <td>
+          <select class="form-control" name="category">
+            {% if data.類別 == 'CD' %}
+              <option value="BOOK">BOOK</option>
+              <option value="DVD">DVD</option>
+              <option value="CD" selected>CD</option>
+            {% elif data.類別 == 'DVD' %}
+              <option value="BOOK">BOOK</option>
+              <option value="DVD" selected>DVD</option>
+              <option value="CD">CD</option>
+            {% else %}
+              <option value="BOOK" selected>BOOK</option>
+              <option value="DVD">DVD</option>
+              <option value="CD">CD</option>
+            {% endif %}
+            
+        </select>
+      </tr>
+      <tr>
+        <th>商品敘述</th>
+        <td>
+          <textarea class="form-control" name="description">{{ data.商品敘述 }}</textarea>
+        </td>
+      </tr>
+      <tr>
+        <th>商品圖片</th>
+        <td>
+          <input type="file" name="file" id="file-uploader" data-target="file-uploader"/>
+        </td>
+      </tr>
+    </table>
+    <center>
+      <div class="option">
+        <button class="btn btn-outline-success" type="submit">確定修改</button> 
+        <a href="{{ url_for('manager.productManager') }}"><button class="btn btn-outline-danger">回商品管理</button></a>
+      </div>
+    </center>
+
+  </form>
+</div>
+
+
+
+{% endblock content%}

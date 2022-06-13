@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% block head %}
+{{ super() }}
+{% endblock head %}
+
+{% block title %}Register Page{% endblock title%}
+
+{% block content%}
+<a href="{{ url_for('index') }}"><img class="icon" src="{{ url_for('static', filename='./img/home.png') }}"></a>
+<h1 class="register_title">會員註冊</h1>
+
+
+
+<div class="form_div">
+    <form  method='post' action={{ url_for('api.register') }} >
+        <p>
+            姓名：<input type="text" name="username" required/>
+        </p>
+
+        <div >
+            帳號：<input type="text" name="account" required/>
+            {% with messages = get_flashed_messages() %}
+            {% if messages %}
+            <p class="same_accoount">
+                *已經有相同的帳號名稱
+            </p>
+            {% endif %}
+            {% endwith %}
+        </div>
+
+        <p>
+            密碼：<input type="password" name="password" required/>
+        </p>
+        <div class="btn_div">
+            <p class="option_div">選擇你要註冊的身份：</p>
+            <select name="identity">
+                <option value="user" selected>使用者</option>
+                <option value="manager" >管理員</option>
+            </select>
+        </div>
+
+        <p>
+            <a href="{{ url_for('index') }}">
+                <button type="button" class="register_btn">回上頁</button>
+            </a>
+            <button type="submit" class="register_btn"> 註冊</button>
+        </p>
+    </form>
+</div>
+{% endblock content%}

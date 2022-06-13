@@ -1,0 +1,80 @@
+{% extends "frontstage.html" %}
+{% block head %}
+{{ super() }}
+{% endblock head %}
+
+{% block title %}BookStore{% endblock title%}
+
+{% block content %}
+<!-- <form method="post" action="#"> -->
+  {% for i in data %}
+  <div class="modal fade" id="staticBackdrop{{i.訂單編號}}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+      <div class="modal-dialog">
+          <div class="modal-content">
+              <div class="modal-header">
+                  <h5 class="modal-title" id="staticBackdropLabel">訂單細項列表</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                  <div class="mb-3">
+                    <table class="table table-bordered">
+                      <tr>
+                        <th><center>商品名稱</center></th>
+                        <th><center>商品單價</center></th>
+                        <th><center>訂購數量</center></th>
+                      </tr>
+                      
+                      {% for j in detail %}
+                      {% if j.訂單編號 == i.訂單編號 %}
+                      <tr>
+                        <td> <center>{{ j.商品名稱 }}</center></td>
+                        <td> <center>{{ j.商品單價 }}</center></td>
+                        <td> <center>{{ j.訂購數量 }}</center></td>
+                      </tr>
+                      {% endif %}
+                      {% endfor %}
+                    </table>
+                  </div>
+              </div>
+              <div class="modal-footer">
+                  <button type="button" class="btn btn-outline-success" data-bs-dismiss="modal" style="width:30%;">回訂單</button>
+              </div>
+          </div>
+      </div>
+  </div>
+  {% endfor %}
+<!-- </form> -->
+
+
+
+<br/>
+<div class="container-xl">
+  <form method="post" action={{ url_for('bookstore.orderlist') }}>
+    <table class="table table-bordered">
+      <tr>
+        <th><center>訂單編號</center></th>
+        <th><center>訂單總價</center></th>
+        <th><center>訂單時間</center></th>
+        <th><center>查看訂單</center></th>
+      </tr>
+      {% for i in data %}
+      <tr>
+        <td> <center>{{ i.訂單編號 }}</center></td>
+        <td> <center>{{ i.訂單總價 }}</center></td>
+        <td> <center>{{ i.訂單時間 }}</center></td>
+        <td width="20%">
+          <center>
+            <button type="button" class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#staticBackdrop{{i.訂單編號}}">
+              查看訂單細項
+            </button>
+          </center>
+        </td>
+      </tr>
+      {% endfor %}
+    </table>
+
+  </form>
+</div>
+
+{% endblock content %}
+

@@ -1,0 +1,120 @@
+{% extends "frontstage.html" %}
+{% block head %}
+{{ super() }}
+{% endblock head %}
+
+{% block title %}商品列表{% endblock title%}
+
+{% block content%}
+<br/>
+
+{% with messages = get_flashed_messages() %}
+{% if messages %}
+  
+<script language="javascript">
+
+  alert('您沒有管理員的權限喔！');
+
+</script>
+
+{% endif %}
+{% endwith %}
+<div class="book_table">
+
+  <form class="d-flex col-sm-4" action="{{ url_for('bookstore.bookstore', keyword=1) }}">
+    <div class="input-group">
+    <span class="input-group-text" id="basic-addon1">
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+        <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+      </svg>
+    </span>
+    <input name='keyword' class="form-control me-2" type="search" placeholder="搜尋商品" aria-label="Search">
+    </div>
+  </form><br/>
+  <form method="post" action={{ url_for('bookstore.cart') }}>
+      
+      {% for book in book_data %}
+      {% if loop.index % 3 == 1 %}
+      <div class="row">
+      {% endif %}
+      
+        <div class="col-sm-4">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">{{book.商品名稱}}</h5>
+              <p class="card-text">${{book.商品價格}}</p>
+              
+              <a href="{{ url_for('bookstore.bookstore', pid=book.商品編號) }}" class="btn btn-outline-primary">查看商品資訊</a>
+              <button class="btn btn-outline-success" type="submit" value="{{book.商品編號}}" name="pid" >加入購物車</button>
+            </div>
+          </div>
+        </div>
+
+        {% if loop.index % 3 == 0 %}
+        </div><br/>
+        {% endif %}
+            
+      {% endfor %}
+    </table>
+  </form>
+
+
+  <nav aria-label="Page navigation">
+    <ul class="pagination justify-content-center">
+      {% if page == 1 %}
+      <li class="page-item disabled">
+        <a class="page-link" href="#" aria-label="Previous">
+          <span aria-hidden="true">&laquo;</span>
+        </a>
+      </li>
+      {% else %}
+      {% if flag == 1 %}
+      <li class="page-item">
+        <a class="page-link" href="{{ url_for('bookstore.bookstore', keyword=keyword, page=page-1) }}" aria-label="Previous">
+          <span aria-hidden="true">&laquo;</span>
+        </a>
+      </li>
+      {% else %}
+      <li class="page-item">
+        <a class="page-link" href="{{ url_for('bookstore.bookstore', page=page-1) }}" aria-label="Previous">
+          <span aria-hidden="true">&laquo;</span>
+        </a>
+      </li>
+      {% endif %}
+      {% endif %}
+      {% for i in range(1, pagenum + 1) %}
+      {% if flag == 1 %}
+      <li class="page-item"><a class="page-link" href="{{ url_for('bookstore.bookstore', keyword=keyword, page=i) }}">{{i}}</a></li>
+      {% else %}
+      <li class="page-item"><a class="page-link" href="{{ url_for('bookstore.bookstore', page=i) }}">{{i}}</a></li>
+      {% endif %}
+      {% endfor %}
+      {% if endpoint == 1 %}
+      <li class="page-item disabled">
+        <a class="page-link" href="#" aria-label="Next">
+          <span aria-hidden="true">&raquo;</span>
+        </a>
+      </li>
+      {% else %}
+      {% if flag == 1 %}
+      <li class="page-item">
+        <a class="page-link" href="{{ url_for('bookstore.bookstore', keyword=keyword, page=page+1) }}" aria-label="Next">
+          <span aria-hidden="true">&raquo;</span>
+        </a>
+      </li>
+      {% else %}
+      <li class="page-item">
+        <a class="page-link" href="{{ url_for('bookstore.bookstore', page=page+1) }}" aria-label="Next">
+          <span aria-hidden="true">&raquo;</span>
+        </a>
+      </li>
+      {% endif %}
+      {% endif %}
+    </ul>
+  </nav>
+
+
+
+</div>
+
+{% endblock content%}

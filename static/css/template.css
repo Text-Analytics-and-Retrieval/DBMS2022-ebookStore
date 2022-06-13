@@ -1,0 +1,166 @@
+body {
+    font-family: Helvetica, Arial, sans-serif;
+    background-color: #D6D6D6;
+}
+.index_pic{
+    height: 300px;
+    margin:auto;
+    display:block;
+    margin-bottom: 50px;
+}
+.index_title{
+    text-align: center;
+    font-size: 60px;
+    margin-bottom:0px;
+    margin-top: 50px;
+}
+.book_title{
+    text-align: center;
+    font-size: 34px;
+    margin-right: 30px;
+}
+.register_title{
+    text-align: center;
+    font-size: 40px;
+    margin-bottom:0px;
+    margin-top: 0px;
+}
+.index_btn{
+    width: 300px;
+    height: 50px;
+    font-size: 30px;
+    margin: 10px;
+    background-color: #97A38D;
+    color:white;
+    border-radius: 10px;
+    border: 0px;
+    cursor: pointer;
+}
+.index_btn:hover{
+    opacity: 0.8;
+}
+.btn_div{
+    display: flex;
+    justify-content: center;
+
+}
+.option_div{
+    margin: 0px 10px 0px 0px;
+}
+.form_div{
+    text-align: center;
+}
+input{
+    height: 30px;
+    width: 200px;
+    border-radius: 5px;
+    border: 0px;
+}
+.register_btn{
+    width: 70px;
+    height: 30px;
+    font-size: 14px;
+    background-color: #97A38D;
+    color:white;
+    border-radius: 10px;
+    border: 0px;
+    cursor: pointer;
+}
+.register_btn:hover{
+    opacity: 0.8;
+}
+.icon{
+    height: 100px;
+    margin:auto;
+    display:block;
+}
+.same_accoount{
+    color: red;
+    margin-top: 1px;
+}
+.book_table{
+    display: flex;
+    justify-content: center;
+    border-color: black !important;
+    margin: 10px;
+}
+.left{
+    float:left;
+}
+.cart{
+    height: 40px;
+    position: relative;
+    top: 20px;
+}
+.cart:hover{
+    position: relative;
+    top: 15px;
+}
+.cart_input{
+    width: 40px;
+}
+.logout{
+    height: 30px;
+    position: relative;
+    top: 30px;
+    left: 30px;
+}
+.logout:hover{
+    position: relative;
+    top: 20px;
+}
+.id_input{
+    background-color: #d7d7d7;
+}
+a{
+    color: black;
+    text-decoration: none;
+}
+.welcome{
+    margin: 0px;
+    font-size: 16px;
+}
+button{
+    cursor: pointer;
+}
+.empty{
+    min-height: 400px;
+    text-align: center;
+    font-size: 18px;
+    font-weight: bold;
+}
+.empty_pic{
+    margin-top: 50px;
+    height: 200px;
+}
+.total{
+    text-align: right;
+    font-size: 20px;
+    
+}
+.dash_logout{
+    height: 30px;
+    position: relative;
+    top: 30px;
+    left: 90vw;
+    margin: 5px;
+
+}
+.dash_logout:hover{
+    position: relative;
+    top: 20px;
+    left: 90vw;
+}
+
+.dash_manager{
+    height: 40px;
+    position: relative;
+    top: 30px;
+    left: 90vw;
+    margin: 5px;
+}
+.dash_manager:hover{
+    position: relative;
+    top: 20px;
+    left: 90vw;
+}
