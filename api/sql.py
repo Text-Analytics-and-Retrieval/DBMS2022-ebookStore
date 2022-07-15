@@ -156,7 +156,7 @@ class Order_List():
         DB.commit()
 
     def get_order():
-        sql = 'SELECT OID, NAME, PRICE, ORDERTIME FROM ORDER_LIST NATURAL JOIN MEMBER ORDER BY ORDERTIME DESC'
+        sql = 'SELECT OID, NAME, TOTALPRICE, ORDERTIME FROM ORDER_LIST NATURAL JOIN MEMBER ORDER BY ORDERTIME DESC'
         return DB.fetchall(DB.execute(DB.connect(), sql))
     
     def get_orderdetail():
@@ -165,7 +165,7 @@ class Order_List():
 
 class Analysis():
     def month_price(input):
-        sql = "SELECT strftime('%m', ORDERTIME) AS MON, SUM(PRICE) FROM ORDER_LIST WHERE MON = ? GROUP BY MON"
+        sql = "SELECT strftime('%m', ORDERTIME) AS MON, SUM(TOTALPRICE) FROM ORDER_LIST WHERE MON = ? GROUP BY MON"
         return DB.fetchall(DB.execute_input(DB.connect(), sql, [input]))
 
     def month_count(input):
@@ -177,7 +177,7 @@ class Analysis():
         return DB.fetchall(DB.execute(DB.connect(), sql))
 
     def member_sale(input):
-        sql = "SELECT SUM(PRICE), MEMBER.MID, MEMBER.NAME FROM ORDER_LIST, MEMBER WHERE ORDER_LIST.MID = MEMBER.MID AND MEMBER.IDENTITY = ? GROUP BY MEMBER.MID, MEMBER.NAME ORDER BY SUM(PRICE) DESC LIMIT 5"
+        sql = "SELECT SUM(TOTALPRICE), MEMBER.MID, MEMBER.NAME FROM ORDER_LIST, MEMBER WHERE ORDER_LIST.MID = MEMBER.MID AND MEMBER.IDENTITY = ? GROUP BY MEMBER.MID, MEMBER.NAME ORDER BY SUM(TOTALPRICE) DESC LIMIT 5"
         return DB.fetchall(DB.execute_input(DB.connect(), sql, [input]))
 
     def member_sale_count(input):
