@@ -39,7 +39,7 @@ class Member():
         DB.commit()
     
     def delete_product(input):
-        sql = 'DELETE FROM SHOPPING_LIST WHERE SID = ? and PID = ?'
+        sql = 'DELETE FROM SHOPPING_DETAIL WHERE SID = ? and PID = ?'
         DB.execute_input(DB.connect(), sql, input)
         DB.commit()
         
@@ -53,7 +53,7 @@ class Member():
 
 class Cart():
     def check(user_id):
-        sql = 'SELECT * FROM CART, SHOPPING_LIST WHERE CART.MID = :id AND CART.SID = SHOPPING_LIST.SID'
+        sql = 'SELECT * FROM CART, SHOPPING_DETAIL WHERE CART.MID = :id AND CART.SID = SHOPPING_DETAIL.SID'
         return DB.fetchone(DB.execute_input(DB.connect(), sql, [user_id]))
         
     def get_cart(user_id):
@@ -113,11 +113,11 @@ class Product():
     
 class Record():
     def get_total_money(tno):
-        sql = 'SELECT SUM(TOTAL) FROM SHOPPING_LIST WHERE SID = ?'
+        sql = 'SELECT SUM(TOTAL) FROM SHOPPING_DETAIL WHERE SID = ?'
         return DB.fetchone(DB.execute_input(DB.connect(), sql, [tno]))[0]
 
     def check_product(input):
-        sql = 'SELECT * FROM SHOPPING_LIST WHERE PID = ? and SID = ?'
+        sql = 'SELECT * FROM SHOPPING_DETAIL WHERE PID = ? and SID = ?'
         return DB.fetchone(DB.execute_input(DB.connect(), sql, input))
 
     def get_price(pid):
@@ -125,28 +125,28 @@ class Record():
         return DB.fetchone(DB.execute_input(DB.connect(), sql, [pid]))[0]
 
     def add_product(input):
-        sql = 'INSERT INTO SHOPPING_LIST VALUES (:id, :tno, 1, :price, :total)'
+        sql = 'INSERT INTO SHOPPING_DETAIL VALUES (:id, :tno, 1, :price, :total)'
         DB.execute_input(DB.connect(), sql, input)
         DB.commit()
 
     def get_record(tno):
-        sql = 'SELECT * FROM SHOPPING_LIST WHERE SID = ?'
+        sql = 'SELECT * FROM SHOPPING_DETAIL WHERE SID = ?'
         return DB.fetchall(DB.execute_input(DB.connect(), sql, [tno]))
 
     def get_amount(input):
-        sql = 'SELECT AMOUNT FROM SHOPPING_LIST WHERE SID = ? and PID=:pid'
+        sql = 'SELECT AMOUNT FROM SHOPPING_DETAIL WHERE SID = ? and PID=:pid'
         return DB.fetchone(DB.execute_input(DB.connect(), sql, input))[0]
     
     def update_product(input):
-        sql = 'UPDATE SHOPPING_LIST SET AMOUNT=:amount, TOTAL=:total WHERE PID=:pid and SID=:tno'
+        sql = 'UPDATE SHOPPING_DETAIL SET AMOUNT=:amount, TOTAL=:total WHERE PID=:pid and SID=:tno'
         DB.execute_input(DB.connect(), sql, input)
 
     def delete_check(pid):
-        sql = 'SELECT * FROM SHOPPING_LIST WHERE PID = ?'
+        sql = 'SELECT * FROM SHOPPING_DETAIL WHERE PID = ?'
         return DB.fetchone(DB.execute_input(DB.connect(), sql, [pid]))
 
     def get_total(tno):
-        sql = 'SELECT SUM(TOTAL) FROM SHOPPING_LIST WHERE SID = ?'
+        sql = 'SELECT SUM(TOTAL) FROM SHOPPING_DETAIL WHERE SID = ?'
         return DB.fetchall(DB.execute_input(DB.connect(), sql, [tno]))[0]
 
 class Order_List():
@@ -160,7 +160,7 @@ class Order_List():
         return DB.fetchall(DB.execute(DB.connect(), sql))
     
     def get_orderdetail():
-        sql = 'SELECT O.OID, P.PNAME, R.UNITPRICE, R.AMOUNT FROM ORDER_LIST O, SHOPPING_LIST S, PRODUCT P WHERE O.SID = S.SID AND S.PID = P.PID'
+        sql = 'SELECT O.OID, P.PNAME, R.UNITPRICE, R.AMOUNT FROM ORDER_LIST O, SHOPPING_DETAIL S, PRODUCT P WHERE O.SID = S.SID AND S.PID = P.PID'
         return DB.fetchall(DB.execute(DB.connect(), sql))
 
 class Analysis():
@@ -173,7 +173,7 @@ class Analysis():
         return DB.fetchall(DB.execute_input(DB.connect(), sql, [input]))
     
     def category_sale():
-        sql = 'SELECT SUM(TOTAL), CATEGORY FROM(SELECT * FROM PRODUCT, SHOPPING_LIST, ORDER_LIST WHERE PRODUCT.PID = SHOPPING_LIST.PID AND SHOPPING_LIST.SID = ORDER_LIST.SID) GROUP BY CATEGORY'
+        sql = 'SELECT SUM(TOTAL), CATEGORY FROM(SELECT * FROM PRODUCT, SHOPPING_DETAIL, ORDER_LIST WHERE PRODUCT.PID = SHOPPING_DETAIL.PID AND SHOPPING_DETAIL.SID = ORDER_LIST.SID) GROUP BY CATEGORY'
         return DB.fetchall(DB.execute(DB.connect(), sql))
 
     def member_sale(input):
