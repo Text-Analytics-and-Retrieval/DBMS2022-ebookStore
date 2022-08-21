@@ -1,7 +1,7 @@
 # DBMS2022-ebookStore
 An example database application system with Python Flask + SQLite
 ## Repository Setup
-### 1.Create a fresh virtual enviroment and activate it.
+### 1. Create a fresh virtual enviroment and activate it.
 MacOS / Linux
 ```
 python3 -m pip install virtualenv
@@ -18,18 +18,18 @@ Appendix: Deactivate virtual enviroment
 ```
 deactivate
 ```
-### 2.Clone the repo and install all dependencies.
+### 2. Clone the repo and install all dependencies.
 MacOS / Linux
 ```
-git clone https://github.com/Text-Analytics-and-Retrieval/DBMS2022-ebookStore
+git clone https://github.com/Text-Analytics-and-Retrieval/DBMS2022-ebookStore.git
 python3 -m pip install -r requirements.txt
 ```
 Windows
 ```
-git clone https://github.com/Text-Analytics-and-Retrieval/DBMS2022-ebookStore
+git clone https://github.com/Text-Analytics-and-Retrieval/DBMS2022-ebookStore.git
 pip install -r requirements.txt
 ```
-### 3.Running app.py
+### 3. Running app.py
 Using the command below and visit the running website
 ```
 python app.py
