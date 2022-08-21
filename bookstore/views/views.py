@@ -6,7 +6,7 @@ from datetime import datetime
 from numpy import identity, product
 from sqlalchemy import null
 from link import *
-from api.sql import Member, Order_List, Product, Record, Cart
+from api.sql import Member, Order_List, Product, Shopping_Detail, Cart
 
 store = Blueprint('bookstore', __name__, template_folder='../templates')
 
@@ -198,19 +198,19 @@ def cart():
             # 檢查購物車裡面有沒有商品
             input = (pid, tno)
             
-            product = Record.check_product(input)
+            product = Shopping_Detail.check_product(input)
             # 取得商品價錢
             price = Product.get_product(pid)[2]
 
             # 如果購物車裡面沒有的話 把他加一個進去
             if(product == None):
-                Record.add_product( {'id': tno, 'tno':pid, 'price':price, 'total':price} )
+                Shopping_Detail.add_product( {'id': tno, 'tno':pid, 'price':price, 'total':price} )
             else:
                 # 假如購物車裡面有的話，就多加一個進去
                 input = (tno, pid)
-                amount = Record.get_amount(input)
+                amount = Shopping_Detail.get_amount(input)
                 total = (amount+1) * int(price)
-                Record.update_product({'amount':amount+1, 'tno':tno , 'pid':pid, 'total':total})
+                Shopping_Detail.update_product({'amount':amount+1, 'tno':tno , 'pid':pid, 'total':total})
 
         elif "delete" in request.form :
             pid = request.values.get('delete')
@@ -229,7 +229,7 @@ def cart():
 
         elif "order" in request.form:
             tno = Cart.get_cart(current_user.id)[2]
-            total = Record.get_total_money(tno)
+            total = Shopping_Detail.get_total_money(tno)
             Cart.clear_cart(current_user.id)
 
             time = str(datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
@@ -250,7 +250,7 @@ def order():
     data = Cart.get_cart(current_user.id)
     tno = data[2]
 
-    product_row = Record.get_record(tno)
+    product_row = Shopping_Detail.get_shopping_detail(tno)
     product_data = []
 
     for i in product_row:
@@ -263,7 +263,7 @@ def order():
         }
         product_data.append(product)
     
-    total = Record.get_total(tno)[0]
+    total = Shopping_Detail.get_total(tno)[0]
 
     return render_template('order.html', data=product_data, total=total, user=current_user.name)
 
@@ -303,13 +303,13 @@ def orderlist():
 def change_order():
     data = Cart.get_cart(current_user.id)
     tno = data[2] # 使用者有購物車了，購物車的交易編號是什麼
-    product_row = Record.get_record(data[2])
+    product_row = Shopping_Detail.get_shopping_detail(data[2])
 
     for i in product_row:
         
         # i[0]：交易編號 / i[1]：商品編號 / i[2]：數量 / i[3]：價格
         if int(request.form[i[1]]) != i[2]:
-            Record.update_product({
+            Shopping_Detail.update_product({
                 'amount':request.form[i[1]],
                 'pid':i[1],
                 'tno':tno,
@@ -329,7 +329,7 @@ def only_cart():
     
     data = Cart.get_cart(current_user.id)
     tno = data[2]
-    product_row = Record.get_record(tno)
+    product_row = Shopping_Detail.get_shopping_detail(tno)
     product_data = []
 
     for i in product_row:
