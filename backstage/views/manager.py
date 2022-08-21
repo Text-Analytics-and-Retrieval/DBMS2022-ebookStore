@@ -31,7 +31,7 @@ def productManager():
         
     if 'delete' in request.values:
         pid = request.values.get('delete')
-        data = Record.delete_check(pid)
+        data = Shopping_Detail.delete_check(pid)
         
         if(data != None):
             flash('failed')
