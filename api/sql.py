@@ -111,7 +111,7 @@ class Product():
         DB.execute_input(DB.connect(), sql, input)
         DB.commit()
     
-class Record():
+class Shopping_Detail():
     def get_total_money(tno):
         sql = 'SELECT SUM(TOTAL) FROM SHOPPING_DETAIL WHERE SID = ?'
         return DB.fetchone(DB.execute_input(DB.connect(), sql, [tno]))[0]
@@ -129,7 +129,7 @@ class Record():
         DB.execute_input(DB.connect(), sql, input)
         DB.commit()
 
-    def get_record(tno):
+    def get_shopping_detail(tno):
         sql = 'SELECT * FROM SHOPPING_DETAIL WHERE SID = ?'
         return DB.fetchall(DB.execute_input(DB.connect(), sql, [tno]))
 
@@ -165,11 +165,11 @@ class Order_List():
 
 class Analysis():
     def month_price(input):
-        sql = "SELECT strftime('%m', ORDERTIME) AS MON, SUM(TOTALPRICE) FROM ORDER_LIST WHERE MON = ? GROUP BY MON"
+        sql = "SELECT strftime('%m', ORDERTIME) AS MON, SUM(TOTALPRICE) FROM ORDER_LIST WHERE MON = ?"
         return DB.fetchall(DB.execute_input(DB.connect(), sql, [input]))
 
     def month_count(input):
-        sql = "SELECT strftime('%m', ORDERTIME) AS MON, COUNT(OID) FROM ORDER_LIST WHERE MON = ? GROUP BY MON"
+        sql = "SELECT strftime('%m', ORDERTIME) AS MON, COUNT(OID) FROM ORDER_LIST WHERE MON = ?"
         return DB.fetchall(DB.execute_input(DB.connect(), sql, [input]))
     
     def category_sale():
